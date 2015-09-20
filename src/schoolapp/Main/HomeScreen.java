@@ -35,7 +35,7 @@ public class HomeScreen extends javax.swing.JFrame {
      */
     public HomeScreen() {
         initComponents();
-        Utility.updateFrameTitle(this);
+      //  Utility.updateFrameTitle(this);
         titleText.setText(Utility.SCHOOL_NAME);
         boolean isEnabled=true;
         if(Utility.getUser().equalsIgnoreCase("clerk")){
@@ -69,10 +69,10 @@ public class HomeScreen extends javax.swing.JFrame {
         studentReportBtn = new javax.swing.JButton();
         logOutBtn = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        expenseTypeAddBtn1 = new javax.swing.JButton();
+        expenseTypeAddBtn = new javax.swing.JButton();
         expenseTypeDeleteBtn = new javax.swing.JButton();
         expenseTypeViewBtn = new javax.swing.JButton();
-        expenseTypeEdit1 = new javax.swing.JButton();
+        expenseTypeEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 0));
@@ -230,10 +230,10 @@ public class HomeScreen extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Expense Type Operations", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel4.setForeground(new java.awt.Color(204, 0, 0));
 
-        expenseTypeAddBtn1.setText("Add");
-        expenseTypeAddBtn1.addActionListener(new java.awt.event.ActionListener() {
+        expenseTypeAddBtn.setText("Add");
+        expenseTypeAddBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                expenseTypeAddBtn1ActionPerformed(evt);
+                expenseTypeAddBtnActionPerformed(evt);
             }
         });
 
@@ -251,10 +251,10 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
-        expenseTypeEdit1.setText("Edit");
-        expenseTypeEdit1.addActionListener(new java.awt.event.ActionListener() {
+        expenseTypeEdit.setText("Edit");
+        expenseTypeEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                expenseTypeEdit1ActionPerformed(evt);
+                expenseTypeEditActionPerformed(evt);
             }
         });
 
@@ -264,9 +264,9 @@ public class HomeScreen extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(expenseTypeAddBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(expenseTypeAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
-                .addComponent(expenseTypeEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(expenseTypeEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(expenseTypeDeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -278,8 +278,8 @@ public class HomeScreen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(expenseTypeAddBtn1)
-                    .addComponent(expenseTypeEdit1)
+                    .addComponent(expenseTypeAddBtn)
+                    .addComponent(expenseTypeEdit)
                     .addComponent(expenseTypeDeleteBtn)
                     .addComponent(expenseTypeViewBtn))
                 .addContainerGap())
@@ -422,21 +422,41 @@ public class HomeScreen extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_SMSActionPerformed
 
-    private void expenseTypeAddBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expenseTypeAddBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_expenseTypeAddBtn1ActionPerformed
+    private void expenseTypeAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expenseTypeAddBtnActionPerformed
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AddExpenseType expenseTypeAdd =new AddExpenseType();
+                expenseTypeAdd.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_expenseTypeAddBtnActionPerformed
 
     private void expenseTypeDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expenseTypeDeleteBtnActionPerformed
-        // TODO add your handling code here:
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DeleteExpenseType expenseTypeDel =new DeleteExpenseType();
+                expenseTypeDel.setVisible(true);
+            }
+        });
     }//GEN-LAST:event_expenseTypeDeleteBtnActionPerformed
 
     private void expenseTypeViewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expenseTypeViewBtnActionPerformed
-        // TODO add your handling code here:
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ViewExpenseType expenseTypeView=new ViewExpenseType();
+                expenseTypeView.setVisible(true);
+            }
+        });
     }//GEN-LAST:event_expenseTypeViewBtnActionPerformed
 
-    private void expenseTypeEdit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expenseTypeEdit1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_expenseTypeEdit1ActionPerformed
+    private void expenseTypeEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expenseTypeEditActionPerformed
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                EditExpenseType editExpenseType=new EditExpenseType();
+                editExpenseType.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_expenseTypeEditActionPerformed
 
     
 
@@ -447,9 +467,9 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JButton expenseAddBtn;
     private javax.swing.JButton expenseDeleteBtn;
     private javax.swing.JButton expenseEditBtn;
-    private javax.swing.JButton expenseTypeAddBtn1;
+    private javax.swing.JButton expenseTypeAddBtn;
     private javax.swing.JButton expenseTypeDeleteBtn;
-    private javax.swing.JButton expenseTypeEdit1;
+    private javax.swing.JButton expenseTypeEdit;
     private javax.swing.JButton expenseTypeViewBtn;
     private javax.swing.JButton expenseViewBtn;
     private javax.swing.JPanel jPanel1;

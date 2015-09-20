@@ -6,6 +6,8 @@
 package schoolapp.utilities;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -23,7 +25,7 @@ public class XMLParser {
 
     public ArrayList<Template> parseXML() {
         try {
-            File inputFile = new File("smsTemplates.xml");
+            InputStream inputFile = getClass().getResourceAsStream("smsTemplates.xml");
             DocumentBuilderFactory dbFactory
                     = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

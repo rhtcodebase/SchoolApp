@@ -34,41 +34,9 @@ public class ViewExpense extends javax.swing.JFrame {
      */
     public ViewExpense() {
         initComponents();
-        Utility.updateFrameTitle(this);
+        //Utility.updateFrameTitle(this);
         
-        Vector<Object> columnNames = new Vector<Object>();
-        Vector<Object> data = new Vector<Object>();
-        //  Connect to an MySQL Database, run query, get result set
-
-        String sql = "SELECT * FROM expense_type ;";
-        
-        try {
-            connection = Utility.getConnection();
-            stmt = (Statement) connection.createStatement();
-            rs = stmt.executeQuery(sql);
-            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
-            int columns = md.getColumnCount();
-
-            //  Get column names
-            for (int i = 1; i <= columns; i++) {
-                columnNames.add(md.getColumnName(i));
-            }
-            
-            comboItems = new Vector<Object>();
-            //  Get row data
-            while (rs.next()) {
-                comboItems.add(rs.getString(EXPENSE_TYPE));
-                
-            }
-            comboItems.add("ALL");
-            
-        } catch (SQLException | ClassNotFoundException e) {
-            Utility.showError(this, e.toString());
-        }
-        Utility.closeConnections(this, connection, stmt, rs);
-        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
-        expenseTypeCombo.setModel(model);
-        
+       
     }
 
     /**
@@ -92,6 +60,7 @@ public class ViewExpense extends javax.swing.JFrame {
         expenseTypeCombo = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         totalAmount = new javax.swing.JLabel();
+        populateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
@@ -145,7 +114,6 @@ public class ViewExpense extends javax.swing.JFrame {
 
         jLabel4.setText("Expense Type");
 
-        expenseTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Uniform", "Employee Salary", "MISC", "ALL" }));
         expenseTypeCombo.setMaximumSize(new java.awt.Dimension(30, 32767));
         expenseTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +127,13 @@ public class ViewExpense extends javax.swing.JFrame {
         totalAmount.setForeground(new java.awt.Color(255, 51, 0));
         totalAmount.setText("0.0");
 
+        populateBtn.setText("Populate");
+        populateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                populateBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,7 +144,7 @@ public class ViewExpense extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,20 +153,21 @@ public class ViewExpense extends javax.swing.JFrame {
                                         .addComponent(jLabel1))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(265, 265, 265)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(populateBtn))))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(expenseTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                                    .addComponent(expenseTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(232, 232, 232)
@@ -215,7 +191,8 @@ public class ViewExpense extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(expenseTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(viewBtn))
+                    .addComponent(viewBtn)
+                    .addComponent(populateBtn))
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
@@ -292,6 +269,42 @@ public class ViewExpense extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_expenseTypeComboActionPerformed
 
+    private void populateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateBtnActionPerformed
+         Vector<Object> columnNames = new Vector<Object>();
+        Vector<Object> data = new Vector<Object>();
+        //  Connect to an MySQL Database, run query, get result set
+
+        String sql = "SELECT * FROM expense_type ;";
+        
+        try {
+            connection = Utility.getConnection();
+            stmt = (Statement) connection.createStatement();
+            rs = stmt.executeQuery(sql);
+            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+            int columns = md.getColumnCount();
+
+            //  Get column names
+            for (int i = 1; i <= columns; i++) {
+                columnNames.add(md.getColumnName(i));
+            }
+            
+            comboItems = new Vector<Object>();
+            //  Get row data
+            while (rs.next()) {
+                comboItems.add(rs.getString(EXPENSE_TYPE));
+                
+            }
+            comboItems.add("ALL");
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            Utility.showError(this, e.toString());
+        }
+        Utility.closeConnections(this, connection, stmt, rs);
+        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
+        expenseTypeCombo.setModel(model);
+        
+    }//GEN-LAST:event_populateBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser endDate;
     private javax.swing.JTable expenseTable;
@@ -302,6 +315,7 @@ public class ViewExpense extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton populateBtn;
     private com.toedter.calendar.JDateChooser startDate;
     private javax.swing.JLabel totalAmount;
     private javax.swing.JButton viewBtn;

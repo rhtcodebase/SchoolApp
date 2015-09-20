@@ -41,49 +41,8 @@ public class DeleteExpense extends javax.swing.JFrame {
      */
     public DeleteExpense() {
         initComponents();
-        Utility.updateFrameTitle(this);
-        amountText.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '.')) {
-                    e.consume();  // ignore event
-                }
-            }
-        });
-        Vector<Object> columnNames = new Vector<Object>();
-        Vector<Object> data = new Vector<Object>();
-        //  Connect to an MySQL Database, run query, get result set
-
-        String sql = "SELECT * FROM expense_type ;";
-
-        // Java SE 7 has try-with-resources
-        // This will ensure that the sql objects are closed when the program 
-        // is finished with them
-        try {
-            connection = Utility.getConnection();
-            stmt = (Statement) connection.createStatement();
-            rs = stmt.executeQuery(sql);
-            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
-            int columns = md.getColumnCount();
-
-            //  Get column names
-            for (int i = 1; i <= columns; i++) {
-                columnNames.add(md.getColumnName(i));
-            }
-            
-            comboItems = new Vector<Object>();
-            //  Get row data
-            while (rs.next()) {
-                comboItems.add(rs.getString(EXPENSE_TYPE));
-                
-            }
-            
-        } catch (SQLException | ClassNotFoundException e) {
-            Utility.showError(this, e.toString());
-        }
-        Utility.closeConnections(this, connection, stmt, rs);
-        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
-        expenseTypeCombo.setModel(model);
+//        Utility.updateFrameTitle(this);
+       
     }
 
     /**
@@ -109,6 +68,7 @@ public class DeleteExpense extends javax.swing.JFrame {
         amountText = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
         deleteBtn = new javax.swing.JButton();
+        populateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
@@ -127,8 +87,6 @@ public class DeleteExpense extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Expense Type");
-
-        expenseTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setText("Expense Description");
 
@@ -152,6 +110,13 @@ public class DeleteExpense extends javax.swing.JFrame {
             }
         });
 
+        populateBtn.setText("Populate");
+        populateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                populateBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,21 +137,29 @@ public class DeleteExpense extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(deleteBtn)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(dateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(expenseTypeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(searchExpenseBtn)
-                                .addComponent(jScrollPane1)
-                                .addComponent(amountText)
-                                .addComponent(expenseIdText)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(populateBtn)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dateText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(expenseTypeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(searchExpenseBtn)
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(amountText)
+                                    .addComponent(expenseIdText))))))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel1)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(populateBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(expenseIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -300,6 +273,50 @@ public class DeleteExpense extends javax.swing.JFrame {
         Utility.closeStatement(this, preparedStatement, connect);
     }//GEN-LAST:event_deleteBtnActionPerformed
 
+    private void populateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateBtnActionPerformed
+         amountText.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '.')) {
+                    e.consume();  // ignore event
+                }
+            }
+        });
+
+        Vector<Object> columnNames = new Vector<Object>();
+        Vector<Object> data = new Vector<Object>();
+        //  Connect to an MySQL Database, run query, get result set
+
+        String sql = "SELECT * FROM expense_type ;";
+
+        try {
+            connection = Utility.getConnection();
+            stmt = (Statement) connection.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+            int columns = md.getColumnCount();
+
+            //  Get column names
+            for (int i = 1; i <= columns; i++) {
+                columnNames.add(md.getColumnName(i));
+            }
+
+            comboItems = new Vector<Object>();
+            //  Get row data
+            while (rs.next()) {
+                comboItems.add(rs.getString(EXPENSE_TYPE));
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Utility.showError(this, ex.getMessage());
+        }
+
+        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
+        expenseTypeCombo.setModel(model);
+        Utility.closeConnections(this, connection, stmt, rs);
+    }//GEN-LAST:event_populateBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -318,6 +335,7 @@ public class DeleteExpense extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton populateBtn;
     private javax.swing.JButton searchExpenseBtn;
     // End of variables declaration//GEN-END:variables
 

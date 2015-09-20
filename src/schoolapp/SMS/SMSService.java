@@ -58,7 +58,7 @@ public class SMSService extends javax.swing.JFrame {
     private ResultSet rs;
     private ArrayList<Integer> batchArray;
     private DefaultListModel<String> listModel = new DefaultListModel<String>();
-    private DefaultListModel<String> templateListModel = new DefaultListModel<String>();
+    private DefaultListModel<String> templateListModel ;
     private ArrayList<Template> templates;
 
     private int PHONE_NUMBER = 1;
@@ -70,9 +70,7 @@ public class SMSService extends javax.swing.JFrame {
     public SMSService() {
         initComponents();
         Utility.updateFrameTitle(this);
-        loadCourses();
-        loadBatches();
-        loadTemplates();
+      
 //        loadFeeCategories();
 
         courseNameCombo.addItemListener(new ItemListener() {
@@ -116,6 +114,7 @@ public class SMSService extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         smsLogPane = new javax.swing.JTextArea();
+        populateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -126,11 +125,7 @@ public class SMSService extends javax.swing.JFrame {
 
         jLabel2.setText("Course");
 
-        courseNameCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel3.setText("Batch");
-
-        batchNameCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         addBatchBtn.setText("Add");
         addBatchBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +180,13 @@ public class SMSService extends javax.swing.JFrame {
         smsLogPane.setRows(5);
         jScrollPane5.setViewportView(smsLogPane);
 
+        populateBtn.setText("Populate");
+        populateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                populateBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,8 +216,12 @@ public class SMSService extends javax.swing.JFrame {
                                                 .addComponent(batchNameCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(38, 38, 38)
                                                 .addComponent(removeBatchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(populateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -260,13 +266,15 @@ public class SMSService extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(addBatchBtn)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(batchNameCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(removeBatchBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(populateBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
@@ -365,6 +373,12 @@ public class SMSService extends javax.swing.JFrame {
 
     }//GEN-LAST:event_sendBtnActionPerformed
 
+    private void populateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateBtnActionPerformed
+        loadCourses();
+        loadBatches();
+        loadTemplates();
+    }//GEN-LAST:event_populateBtnActionPerformed
+
     /**
          * @param args the command line arguments
          */
@@ -418,6 +432,7 @@ public class SMSService extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JEditorPane messagePane;
+    private javax.swing.JButton populateBtn;
     private javax.swing.JButton removeBatchBtn;
     private javax.swing.JList selectedBatches;
     private javax.swing.JButton sendBtn;
@@ -517,7 +532,7 @@ public class SMSService extends javax.swing.JFrame {
     private void loadTemplates() {
         XMLParser xmlParser = new XMLParser();
         templates = xmlParser.parseXML();
-
+        templateListModel = new DefaultListModel<String>();
         for (Template template : templates) {
             templateListModel.addElement(template.getShortForm());
 
@@ -597,7 +612,7 @@ public class SMSService extends javax.swing.JFrame {
             }
 
             phoneNos = new StringBuilder();
-            System.out.println("No of Phone numbers = " + noOfPhoneNumbers + " Loop counter=" + loopCounter);
+            
 
             // Residual numbers
             for (int i = loopCounter; i < noOfPhoneNumbers; i++) {

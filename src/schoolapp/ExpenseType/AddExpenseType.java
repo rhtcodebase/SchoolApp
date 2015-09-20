@@ -26,7 +26,7 @@ public class AddExpenseType extends javax.swing.JFrame {
      */
     public AddExpenseType() {
         initComponents();
-        Utility.updateFrameTitle(this);
+   //     Utility.updateFrameTitle(this);
         expenseTypeText.setDocument(new JTextFieldLimit(40));
     }
 

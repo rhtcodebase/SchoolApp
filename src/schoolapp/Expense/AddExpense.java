@@ -36,48 +36,8 @@ public class AddExpense extends javax.swing.JFrame {
      */
     public AddExpense() {
         initComponents();
-        Utility.updateFrameTitle(this);
-        amountTextBox.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '.')) {
-                    e.consume();  // ignore event
-                }
-            }
-        });
-
-        Vector<Object> columnNames = new Vector<Object>();
-        Vector<Object> data = new Vector<Object>();
-        //  Connect to an MySQL Database, run query, get result set
-
-        String sql = "SELECT * FROM expense_type ;";
-
-        try {
-            connection = Utility.getConnection();
-            stmt = (Statement) connection.createStatement();
-            rs = stmt.executeQuery(sql);
-
-            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
-            int columns = md.getColumnCount();
-
-            //  Get column names
-            for (int i = 1; i <= columns; i++) {
-                columnNames.add(md.getColumnName(i));
-            }
-
-            comboItems = new Vector<Object>();
-            //  Get row data
-            while (rs.next()) {
-                comboItems.add(rs.getString(EXPENSE_TYPE));
-            }
-
-        } catch (SQLException | ClassNotFoundException ex) {
-            Utility.showError(this, ex.getMessage());
-        }
-
-        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
-        expenseTypeCombo.setModel(model);
-        Utility.closeConnections(this, connection, stmt, rs);
+  //      Utility.updateFrameTitle(this);
+       
     }
 
     /**
@@ -101,6 +61,7 @@ public class AddExpense extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
         amountTextBox = new javax.swing.JTextField();
+        populateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
@@ -116,7 +77,6 @@ public class AddExpense extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Amount");
 
-        expenseTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Uniform", "Employee Salary", "Misc" }));
         expenseTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 expenseTypeComboActionPerformed(evt);
@@ -150,6 +110,13 @@ public class AddExpense extends javax.swing.JFrame {
             }
         });
 
+        populateBtn.setText("Populate");
+        populateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                populateBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,30 +124,32 @@ public class AddExpense extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(90, 90, 90)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(59, 59, 59)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(expenseTypeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(expenseDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40))
-                            .addComponent(amountTextBox)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(183, 183, 183)
-                        .addComponent(lblAddExpense)))
+                        .addComponent(lblAddExpense))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(populateBtn)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(11, 11, 11))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(90, 90, 90)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(59, 59, 59)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1)
+                                .addComponent(expenseTypeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(expenseDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(40, 40, 40))
+                                .addComponent(amountTextBox)))))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -188,7 +157,9 @@ public class AddExpense extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblAddExpense)
-                .addGap(33, 33, 33)
+                .addGap(4, 4, 4)
+                .addComponent(populateBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
@@ -286,6 +257,50 @@ public class AddExpense extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_amountTextBoxActionPerformed
 
+    private void populateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateBtnActionPerformed
+         amountTextBox.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '.')) {
+                    e.consume();  // ignore event
+                }
+            }
+        });
+
+        Vector<Object> columnNames = new Vector<Object>();
+        Vector<Object> data = new Vector<Object>();
+        //  Connect to an MySQL Database, run query, get result set
+
+        String sql = "SELECT * FROM expense_type ;";
+
+        try {
+            connection = Utility.getConnection();
+            stmt = (Statement) connection.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+            int columns = md.getColumnCount();
+
+            //  Get column names
+            for (int i = 1; i <= columns; i++) {
+                columnNames.add(md.getColumnName(i));
+            }
+
+            comboItems = new Vector<Object>();
+            //  Get row data
+            while (rs.next()) {
+                comboItems.add(rs.getString(EXPENSE_TYPE));
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Utility.showError(this, ex.getMessage());
+        }
+
+        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
+        expenseTypeCombo.setModel(model);
+        Utility.closeConnections(this, connection, stmt, rs);
+    }//GEN-LAST:event_populateBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField amountTextBox;
@@ -299,6 +314,7 @@ public class AddExpense extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddExpense;
+    private javax.swing.JButton populateBtn;
     private javax.swing.JButton submitBtn;
     // End of variables declaration//GEN-END:variables
 

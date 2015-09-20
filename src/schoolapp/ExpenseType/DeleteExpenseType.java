@@ -35,41 +35,8 @@ public class DeleteExpenseType extends javax.swing.JFrame {
      */
     public DeleteExpenseType() {
         initComponents();
-        Utility.updateFrameTitle(this);
-        Vector<Object> columnNames = new Vector<Object>();
-        Vector<Object> data = new Vector<Object>();
-        //  Connect to an MySQL Database, run query, get result set
-
-        String sql = "SELECT * FROM expense_type ;";
-
-        // Java SE 7 has try-with-resources
-        // This will ensure that the sql objects are closed when the program 
-        // is finished with them
-        try {
-            connection = Utility.getConnection();
-            stmt = (Statement) connection.createStatement();
-            rs = stmt.executeQuery(sql);
-            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
-            int columns = md.getColumnCount();
-
-            //  Get column names
-            for (int i = 1; i <= columns; i++) {
-                columnNames.add(md.getColumnName(i));
-            }
-            
-            comboItems = new Vector<Object>();
-            //  Get row data
-            while (rs.next()) {
-                comboItems.add(rs.getString(EXPENSE_TYPE));
-                
-            }
-            
-        } catch (SQLException | ClassNotFoundException e) {
-            Utility.showError(this, e.toString());
-        }
-        Utility.closeConnections(this, connection, stmt, rs);
-        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
-        expenseTypeCombo.setModel(model);
+   //     Utility.updateFrameTitle(this);
+     
     }
 
     /**
@@ -85,6 +52,7 @@ public class DeleteExpenseType extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         expenseTypeCombo = new javax.swing.JComboBox();
         deleteBtn = new javax.swing.JButton();
+        populateBTn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
@@ -95,12 +63,17 @@ public class DeleteExpenseType extends javax.swing.JFrame {
 
         jLabel3.setText("Expense Type");
 
-        expenseTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         deleteBtn.setText("Delete");
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBtnActionPerformed(evt);
+            }
+        });
+
+        populateBTn.setText("Populate");
+        populateBTn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                populateBTnActionPerformed(evt);
             }
         });
 
@@ -111,15 +84,19 @@ public class DeleteExpenseType extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jLabel3)
-                        .addGap(44, 44, 44)
-                        .addComponent(expenseTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(163, 163, 163)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(populateBTn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(44, 44, 44)
+                                .addComponent(expenseTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -131,9 +108,11 @@ public class DeleteExpenseType extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(expenseTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(35, 35, 35)
-                .addComponent(deleteBtn)
-                .addGap(190, 190, 190))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteBtn)
+                    .addComponent(populateBTn))
+                .addGap(189, 189, 189))
         );
 
         pack();
@@ -172,6 +151,42 @@ public class DeleteExpenseType extends javax.swing.JFrame {
         Utility.closeStatement(this, preparedStatement, connect);
     }//GEN-LAST:event_deleteBtnActionPerformed
 
+    private void populateBTnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateBTnActionPerformed
+        Vector<Object> columnNames = new Vector<Object>();
+        Vector<Object> data = new Vector<Object>();
+        //  Connect to an MySQL Database, run query, get result set
+
+        String sql = "SELECT * FROM expense_type ;";
+        
+        try {
+            connection = Utility.getConnection();
+            stmt = (Statement) connection.createStatement();
+            rs = stmt.executeQuery(sql);
+            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+            int columns = md.getColumnCount();
+
+            //  Get column names
+            for (int i = 1; i <= columns; i++) {
+                columnNames.add(md.getColumnName(i));
+            }
+            
+            comboItems = new Vector<Object>();
+            //  Get row data
+            while (rs.next()) {
+                comboItems.add(rs.getString(EXPENSE_TYPE));
+                
+            }
+            comboItems.add("ALL");
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            Utility.showError(this, e.toString());
+        }
+        Utility.closeConnections(this, connection, stmt, rs);
+        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
+        expenseTypeCombo.setModel(model);
+        
+    }//GEN-LAST:event_populateBTnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -181,6 +196,7 @@ public class DeleteExpenseType extends javax.swing.JFrame {
     private javax.swing.JComboBox expenseTypeCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton populateBTn;
     // End of variables declaration//GEN-END:variables
 
     private void clearForm() {

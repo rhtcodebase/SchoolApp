@@ -32,45 +32,11 @@ public class ViewIncome extends javax.swing.JFrame {
      */
     public ViewIncome() {
         initComponents();
-        Utility.updateFrameTitle(this);
-        Vector<Object> columnNames = new Vector<Object>();
-        Vector<Object> data = new Vector<Object>();
-        //  Connect to an MySQL Database, run query, get result set
-
-        String sql = "SELECT C.name "
-                + "FROM finance_fee_categories AS C GROUP BY C.name";
-
-        try {
-            connection = Utility.getConnection();
-            stmt = (Statement) connection.createStatement();
-            rs = stmt.executeQuery(sql);
-            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
-            int columns = md.getColumnCount();
-
-            //  Get column names
-            for (int i = 1; i <= columns; i++) {
-                columnNames.add(md.getColumnName(i));
-            }
-
-            comboItems = new Vector<Object>();
-            //  Get row data
-            int FEE_COLLECTION_NAME = 1;
-            while (rs.next()) {
-
-                comboItems.add(rs.getString(FEE_COLLECTION_NAME));
-
-            }
-            comboItems.add("ALL");
-
-        } catch (SQLException | ClassNotFoundException e) {
-            Utility.showError(this, e.toString());
-        }
-        Utility.closeConnections(this, connection, stmt, rs);
-        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
-        feeCategoryCombo.setModel(model);
-
+   //     Utility.updateFrameTitle(this);
+        
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,9 +58,9 @@ public class ViewIncome extends javax.swing.JFrame {
         totalAmount = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         expenseTable = new javax.swing.JTable();
+        loadBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Pragati English and Kannda Medium School");
         setLocationByPlatform(true);
         setResizable(false);
 
@@ -114,7 +80,6 @@ public class ViewIncome extends javax.swing.JFrame {
 
         jLabel4.setText("Fee Category");
 
-        feeCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Uniform", "Employee Salary", "MISC", "ALL" }));
         feeCategoryCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 feeCategoryComboActionPerformed(evt);
@@ -152,6 +117,13 @@ public class ViewIncome extends javax.swing.JFrame {
         expenseTable.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(expenseTable);
 
+        loadBtn.setText("Populate");
+        loadBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,21 +140,26 @@ public class ViewIncome extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addGap(34, 34, 34))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(172, 172, 172)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(172, 172, 172)
-                                        .addComponent(jLabel1))
-                                    .addComponent(feeCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(feeCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3)))
+                                .addGap(16, 16, 16)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(viewBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                            .addComponent(endDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(loadBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -206,7 +183,8 @@ public class ViewIncome extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(feeCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(viewBtn))
+                    .addComponent(viewBtn)
+                    .addComponent(loadBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -296,6 +274,10 @@ public class ViewIncome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_feeCategoryComboActionPerformed
 
+    private void loadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadBtnActionPerformed
+        loadFeeCategoryBtn();
+    }//GEN-LAST:event_loadBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser endDate;
     private javax.swing.JTable expenseTable;
@@ -306,8 +288,48 @@ public class ViewIncome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton loadBtn;
     private com.toedter.calendar.JDateChooser startDate;
     private javax.swing.JLabel totalAmount;
     private javax.swing.JButton viewBtn;
     // End of variables declaration//GEN-END:variables
+
+    private void loadFeeCategoryBtn() {
+    Vector<Object> columnNames = new Vector<Object>();
+        Vector<Object> data = new Vector<Object>();
+        //  Connect to an MySQL Database, run query, get result set
+
+        String sql = "SELECT C.name "
+                + "FROM finance_fee_categories AS C GROUP BY C.name";
+
+        try {
+            connection = Utility.getConnection();
+            stmt = (Statement) connection.createStatement();
+            rs = stmt.executeQuery(sql);
+            ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+            int columns = md.getColumnCount();
+
+            //  Get column names
+            for (int i = 1; i <= columns; i++) {
+                columnNames.add(md.getColumnName(i));
+            }
+
+            comboItems = new Vector<Object>();
+            //  Get row data
+            int FEE_COLLECTION_NAME = 1;
+            while (rs.next()) {
+
+                comboItems.add(rs.getString(FEE_COLLECTION_NAME));
+
+            }
+            comboItems.add("ALL");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            Utility.showError(this, e.toString());
+        }
+        Utility.closeConnections(this, connection, stmt, rs);
+        DefaultComboBoxModel model = new DefaultComboBoxModel(comboItems);
+        feeCategoryCombo.setModel(model);
+
+    }
 }

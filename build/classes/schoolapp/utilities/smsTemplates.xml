@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<messages>
+    <template>
+        <tempID>45745</tempID>
+        <shortForm>SSLC Wishes</shortForm>
+        <description>
+            Dear Parent, we wish your ward All The Best for the SSLC Exam. From: CES High School, Yadgiri.
+        </description>
+    </template>
+     <template>
+        <tempID>45744</tempID>
+        <shortForm>RTE Notification</shortForm>
+        <description>
+            RTE Parents, bring all original documents of your child for RTE application verification on (Date) @ (Time) . From: CES High School, Yadgiri.
+        </description>
+    </template>
+	<template>
+        <tempID>45743</tempID>
+        <shortForm>Function Notification</shortForm>
+        <description>
+           Dear Parent, (Function / Competition) will be held on (Date) at (Time) in School Premises.Kindly send your child to school on time to be a part of the (Function/Competition). Thank You. From: CES High School, Yadgiri.
+        </description>
+    </template>
+	<template>
+        <tempID>45741</tempID>
+        <shortForm>Vacation Notification</shortForm>
+        <description>
+        Dear Parent, (Summer/Winter) vacation starts from (Start_date) and reopens on (End_Date). Thank You. From: CES High School, Yadgiri.  
+        </description>
+    </template>
+	<template>
+        <tempID>45740</tempID>
+        <shortForm>Holiday Notification</shortForm>
+        <description>
+          Dear Parents, (Date) will be holiday on occasion of (Reason for holiday). Thank You. From: CES High School, Yadgiri.
+        </description>
+	</template>
+		<template>
+        <tempID>45739</tempID>
+        <shortForm>PT Notification</shortForm>
+        <description>
+          Dear Parents, Parents Meeting is going to be held on (Date) at (Time). Please attend without fail. Thank you. From: CES High School, Yadgiri.
+        </description>
+	</template>
+		<template>
+        <tempID>45738</tempID>
+        <shortForm>Result Notification</shortForm>
+        <description>
+          Dear Parents, the results of (Mid Term/Annual Exams) will be announced on (Date) at (Time). Thank you. From: CES High School, Yadgiri.
+        </description>
+	</template>
+		<template>
+        <tempID>45936</tempID>
+        <shortForm>Exam Notification</shortForm>
+        <description>
+          Dear Parents, The (Mid Term/Annual Term) Exams will begin from (Start date) to (End Date). Thank you. From: Rajeshwari Higher Primary English Medium School, Yadgiri.
+        </description>
+	</template>
+		<template>
+        <tempID>45736</tempID>
+        <shortForm>Unit Test Notification</shortForm>
+        <description>
+          Dear Parents, The (Unit test number) will begin from (Start date) to (End Date). Thank you. From: CES High School, Yadgiri.
+        </description>
+	</template>
+		<template>
+        <tempID>45734</tempID>
+        <shortForm>Fee Payment Notification</shortForm>
+        <description>
+          Dear Parents, you are requested to pay the (First Term/Second Term)  fee before (Date). Ignore if already paid. Thank you. From: CES High School, Yadgiri.
+        </description>
+	</template>
+		
+</messages>
