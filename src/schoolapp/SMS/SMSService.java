@@ -15,6 +15,7 @@ import java.awt.event.ItemListener;
 import java.awt.print.PrinterException;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -31,8 +32,10 @@ import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import schoolapp.utilities.PrintUtilities;
 import schoolapp.utilities.Template;
@@ -374,9 +377,26 @@ public class SMSService extends javax.swing.JFrame {
     }//GEN-LAST:event_sendBtnActionPerformed
 
     private void populateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateBtnActionPerformed
+        File selectedFile = null;
         loadCourses();
         loadBatches();
-        loadTemplates();
+        
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter fe = new FileNameExtensionFilter("xml","xml");
+        fileChooser.setFileFilter(fe);
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+          selectedFile = fileChooser.getSelectedFile();
+          System.out.println(selectedFile.getAbsolutePath());
+          if(selectedFile.getAbsolutePath().contains("smsTemplates")){
+             loadTemplates(selectedFile.getAbsolutePath());
+          }
+          else{
+              Utility.showError(this, "You've selected Wrong template file. Please select the correct one!");
+          }
+        }
+        
+      
     }//GEN-LAST:event_populateBtnActionPerformed
 
     /**
@@ -529,9 +549,9 @@ public class SMSService extends javax.swing.JFrame {
 
     }
 
-    private void loadTemplates() {
+    private void loadTemplates(String fileName) {
         XMLParser xmlParser = new XMLParser();
-        templates = xmlParser.parseXML();
+        templates = xmlParser.parseXML(fileName);
         templateListModel = new DefaultListModel<String>();
         for (Template template : templates) {
             templateListModel.addElement(template.getShortForm());
