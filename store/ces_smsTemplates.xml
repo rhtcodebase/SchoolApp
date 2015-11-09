@@ -11,14 +11,14 @@ and open the template in the editor.
         <tempID>45745</tempID>
         <shortForm>SSLC Wishes</shortForm>
         <description>
-            Dear Parent, we wish your ward All The Best for the SSLC Exam. From: CES High School, Yadgiri.
+            Dear Parent, we wish your ward All The Best for the SSLC Exam. Thank You. From: CES High School, Yadgiri.
         </description>
     </template>
      <template>
         <tempID>45744</tempID>
         <shortForm>RTE Notification</shortForm>
         <description>
-            RTE Parents, bring all original documents of your child for RTE application verification on (Date) @ (Time) . From: CES High School, Yadgiri.
+            RTE Parents, bring all original documents of your child for RTE application verification on (Date) @ (Time). Thank You. From: CES High School, Yadgiri.
         </description>
     </template>
 	<template>
@@ -60,7 +60,7 @@ and open the template in the editor.
         <tempID>45936</tempID>
         <shortForm>Exam Notification</shortForm>
         <description>
-          Dear Parents, The (Mid Term/Annual Term) Exams will begin from (Start date) to (End Date). Thank you. From: Rajeshwari Higher Primary English Medium School, Yadgiri.
+          Dear Parents, The (Mid Term/Annual Term) Exams will begin from (Start date) to (End Date). Thank You. From: CES High School, Yadgiri.
         </description>
 	</template>
 		<template>
@@ -77,5 +77,12 @@ and open the template in the editor.
           Dear Parents, you are requested to pay the (First Term/Second Term)  fee before (Date). Ignore if already paid. Thank you. From: CES High School, Yadgiri.
         </description>
 	</template>
+    <template>
+        <tempID>46475</tempID>
+        <shortForm>Holiday Notification-1</shortForm>
+        <description>
+          Dear Parents, (Date) will be holiday due to (Reason). Thank You. From: CES High School, Yadgir.
+        </description>
+    </template>
 		
 </messages>

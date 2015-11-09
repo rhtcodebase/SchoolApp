@@ -23,9 +23,9 @@ import org.w3c.dom.Element;
 public class XMLParser {
     private ArrayList<Template> templates;
 
-    public ArrayList<Template> parseXML() {
+    public ArrayList<Template> parseXML(String fileName) {
         try {
-            InputStream inputFile = getClass().getResourceAsStream("smsTemplates.xml");
+            File inputFile = new File(fileName);
             DocumentBuilderFactory dbFactory
                     = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -57,7 +57,7 @@ public class XMLParser {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Utility.showError(null, "Please select the correect XML/template file");
         }
         return templates;
     }

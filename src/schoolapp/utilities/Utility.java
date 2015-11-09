@@ -22,28 +22,25 @@ import javax.swing.JTable;
  * @author prohit
  */
 public class Utility {
-    private static final String url = "jdbc:mysql://localhost:3306/my_wk_db";
+//    private static final String url = "jdbc:mysql://thirstyscholarstech.com:3306/slte";
+//    private static final String userid = "slte";
+//    private static final String password = "Walter#07";
+
+    private static final String url = "jdbc:mysql://localhost:3306/school_db";
     private static final String userid = "root";
     private static final String password = "";
-
-//    private static final String url = "";
-//    private static final String userid = "";
-//    private static final String password = "";
-    private static String user = null;
-    private static Connection connection = null;
-    public static final String SMS_URL = "";
-    public static final String SMS_UID = "";
-    public static final String SMS_PIN = "";
-    public static final String SMS_ROUTE = "";
-    public static final String SMS_SENDER = "";
+    private static String user;
+    private static Connection connection;
+    public static final String SMS_URL = "http://sms.thirstyscholarstech.com/api/sms.php";
+    public static final String SMS_UID = "736c7465";
+    public static final String SMS_PIN = "2eb0f7cc436700baf9eedf93acbbe3c6";
+    public static final String SMS_ROUTE = "5";
+    public static final String SMS_SENDER = "SLTPSG";
     public static final String USER_AGENT = "Mozilla/5.0";
-//   
-//    private static final String url = "jdbc:mysql://localhost:3306/pragathischool";
-//    private static final String userid = "root";
-//    private static final String password = "";
-
-    public static String SCHOOL_NAME = "Rajeshwari Higher Primary English Medium School";
-
+    public static String SCHOOL_NAME = "SLT Public School, Gurumitkal";
+    public static final String STUDY_CERTIFICATE_PATH = "c:\\rjps_studycertificates";
+    public static final String TRANSFER_CERTIFICATE_PATH = "c:\\rjps_transfercertificates";
+    
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
 
         Class.forName("com.mysql.jdbc.Driver");

@@ -5,7 +5,7 @@
             <url>src/schoolapp/utilities/Utility.java</url>
             <bookmark id="1">
                 <name/>
-                <line>24</line>
+                <line>32</line>
                 <key/>
             </bookmark>
         </file>
@@ -24,12 +24,13 @@
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/utilities/XMLParser.java</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/ExpenseType/DeleteExpenseType.java</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/Main/HomeScreen.java</file>
-            <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/smsTemplates.xml</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/utilities/Template.java</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/ExpenseType/AddExpenseType.java</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/report/ViewBatchWiseReport.java</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/report/ViewStudentReport.java</file>
+            <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/manifest.mf</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/build.xml</file>
+            <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/Main/school_logo.PNG</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/utilities/PrintUtilities.java</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/src/schoolapp/ExpenseType/ViewExpenseType.java</file>
             <file>file:/C:/Users/prohit/Documents/NetBeansProjects/SchoolApp/nbproject/build-impl.xml</file>
